@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('gates', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug');
-            $table->string('type');
-
-            $table->json('meta')->nullable();
-
-            $table->string('creator_address');
             $table->timestamps();
+            $table->string('contract_address');
+            $table->string('token_standard');
+            $table->string('blockchain');
+            $table->string('creator');
+            $table->integer('item_id');
+
         });
     }
 
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('gates');
     }
 };

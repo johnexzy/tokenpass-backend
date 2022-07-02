@@ -13,16 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('token_requirements', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug');
-            $table->string('type');
-
-            $table->json('meta')->nullable();
-
-            $table->string('creator_address');
             $table->timestamps();
+            $table->integer('gate_id');
+            $table->integer('token_id')->nullable();
+            $table->integer('amount_required')->nullable();
         });
     }
 
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('token_requirements');
     }
 };

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CreatorController;
+use App\Http\Controllers\GateController;
 use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
 
-    Route::post('/items', [ItemController::class, 'store']);
+
+    Route::resource('items', ItemController::class);
+    // Route::get('crea/{user}')
+    Route::resource('creators', CreatorController::class);
+    Route::get('/gates', [GateController::class, 'index']);
 
 });

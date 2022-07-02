@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Item>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TokenRequirement>
  */
-class ItemFactory extends Factory
+class TokenRequirementFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,9 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->sentence,
-            'type' => $this->faker->randomElement(['link', 'video', 'music', 'article', 'ebook']),
-            
+            'token_id' => rand(0, 255),
+            'amount_required' => rand(1, 255),
+
         ];
     }
 }
