@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Item;
 use App\Models\Creator;
 use App\Models\TokenRequirement;
@@ -12,15 +13,16 @@ class Gate extends Model
     use HasFactory;
 
     protected $fillable = [
-        'contract_address', 'token_standard', 'blockchain', 'token_requirements', 'creator', 'item_id'
+        'contract_address', 'token_standard', 'blockchain', 'token_requirements', 'creator', 'item_id', 'token_name'
     ];
-
+    protected $hidden = ['created_at', 'updated_at', 'id', 'item_id'];
     public function item()
     {
         return $this->belongsTo(Item::class);
     }
 
-    public function tokenRequirements(){
+    public function tokenRequirements()
+    {
         return $this->hasMany(TokenRequirement::class);
     }
 }
