@@ -19,7 +19,8 @@ class ItemFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'type' => $this->faker->randomElement(['link', 'video', 'music', 'article', 'ebook']),
-            
+            'description' => $this->faker->text(500),
+            'tagline' => $this->faker->text(200),
         ];
     }
 }
