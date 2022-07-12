@@ -58,9 +58,9 @@ class CreatorController extends Controller
         //  Creator::where('address', $address)->with('items')->firstOrFail();
         $c = Creator::where('address', $address)->first();
         if(is_null($c)){
-            return Creator::create(['address'=>$address])->with('items')->firstOrFail();
+            Creator::create(['address'=>$address]); 
         }
-        return $c->with('items')->firstOrFail();
+        return Creator::where('address', $address)->with('items')->firstOrFail();
     }
 
     /**
