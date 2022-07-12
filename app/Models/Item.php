@@ -12,8 +12,10 @@ class Item extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'type', 'creator_address'
+        'title', 'type', 'description', 'tagline', 'creator_address'
     ];
+
+    protected $hidden = ['id', 'created_at'];
 
     public function creator()
     {
