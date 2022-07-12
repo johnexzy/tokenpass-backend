@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Item::factory(10)->has(Gate::factory())->create();
-        Creator::factory()->count(2)->has(Item::factory(4)->has(Gate::factory(3)->has(TokenRequirement::factory(2))))->create();
+        Creator::factory()->count(10)->has(Item::factory(4)->has(Gate::factory(3)->has(TokenRequirement::factory(2))))->create();
         // Creator::factory(3)->create();
 
     }

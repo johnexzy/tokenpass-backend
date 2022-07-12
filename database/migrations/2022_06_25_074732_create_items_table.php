@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->string('type');
-
+            $table->string('type', 64);
+            $table->text('description')->nullable();
+            $table->text('tagline')->nullable();
             $table->json('meta')->nullable();
-
             $table->string('creator_address');
             $table->timestamps();
         });

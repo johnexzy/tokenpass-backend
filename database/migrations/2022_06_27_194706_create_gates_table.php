@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('contract_address');
             $table->string('token_standard');
             $table->string('blockchain');
+            $table->string('token_name');
             $table->string('creator');
             $table->integer('item_id');
 
