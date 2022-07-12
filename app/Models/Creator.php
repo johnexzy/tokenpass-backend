@@ -14,6 +14,7 @@ class Creator extends Model
     protected $fillable = [
         'address',
     ];
+    protected $hidden = ['id', 'created_at', 'updated_at'];
     public function items()
     {
         return $this->hasMany(Item::class, 'creator_address', 'address');
