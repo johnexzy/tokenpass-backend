@@ -15,7 +15,7 @@ class GateController extends Controller
     public function index()
     {
         //
-        return Gate::select(['contract_address', 'token_standard', 'blockchain', 'item_id', 'id', 'creator_id',])->with(['item', 'creator', 'tokenRequirements:token_id,amount_required,gate_id'])->get();
+        return Gate::with(['item', 'creator', 'tokenRequirements:token_id,amount_required,gate_id'])->get();
     }
 
     /**
