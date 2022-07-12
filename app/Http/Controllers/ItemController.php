@@ -18,8 +18,8 @@ class ItemController extends Controller
     public function index()
     {
         //
-        return Item::select(['title', 'type', 'creator_address', 'id', 'slug'])->with(['gate' => function ($q) {
-            $q->select('contract_address','blockchain','creator','id','token_standard','item_id')->with(['tokenRequirements:token_id,amount_required,id,gate_id']);
+        return Item::with(['gate' => function ($q) {
+            $q->with(['tokenRequirements']);
         },])->get();
     }
 
@@ -48,24 +48,32 @@ class ItemController extends Controller
             'creator_address' => 'required',
             'token_standard' => 'required',
             'blockchain' => 'required',
-            'contract_address' => 'required'
+            'contract_address' => 'required',
+            'token_name' => 'required'
         ]);
 
+        // create item
+        $item = Item::updateOrCreate($request->all(['title', 'type', 'description', 'tagline', 'creator_address']));
 
-        $item = Item::updateOrCreate($request->all(['title', 'type', 'creator_address']));
-        $gate_data = collect($request->all(['contract_address', 'token_standard', 'blockchain']))->toArray();
+        // gating data
+        $gate_data = collect($request->all(['contract_address', 'token_standard', 'blockchain', 'token_name']))->toArray();
         $gate_data['creator'] = $request->creator_address;
         $gate_data['item_id'] = $item->id;
 
+        // create gate
         $gate = Gate::updateOrCreate($gate_data);
+
+        // token data
         $token_data = collect($request->all(['token_id', 'amount_required']))->toArray();
         $token_data['gate_id'] = $gate->id;
+
+        // create token requirements
         TokenRequirement::create($token_data);
 
 
-        return $item->with(['gate' => function ($query) {
-            return $query->select('contract_address','blockchain','creator','id','token_standard','item_id')->with(['tokenRequirements:token_id,amount_required,gate_id']);
-        }])->firstOrFail();
+        return response()->json(Item::where('id', $item->id)->with(['gate' => function ($query) {
+            return $query->with('tokenRequirements');
+        }])->firstOrFail(), 201);
     }
 
     /**
@@ -77,9 +85,9 @@ class ItemController extends Controller
     public function show(string $slug)
     {
         //
-        return Item::where('slug', $slug)->with(['creator' => function ($query) {
-            $query->select(['id', 'address']);
-        }, 'gate',])->firstOrFail();
+        return Item::where('slug', $slug)->with(['gate'=>function($q){
+            return $q->with('tokenRequirements');
+        },])->firstOrFail();
     }
 
     /**
